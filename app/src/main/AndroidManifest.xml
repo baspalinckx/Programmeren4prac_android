@@ -38,7 +38,8 @@
                 android:value=".presentation.MainActivity" />
         </activity>
         <activity android:name=".presentation.ToDoEditActivity" />
-        <activity android:name=".presentation.LoginActivity"></activity>
+        <activity android:name=".presentation.LoginActivity" />
+        <activity android:name=".presentation.FilmListActivity"></activity>
     </application>
 
 </manifest>
