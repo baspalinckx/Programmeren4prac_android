@@ -38,7 +38,11 @@
                 android:value=".presentation.MainActivity" />
         </activity>
         <activity android:name=".presentation.ToDoEditActivity" />
-        <activity android:name=".presentation.LoginActivity"></activity>
+        <activity android:name=".presentation.LoginActivity" />
+        <activity
+            android:name=".presentation.Register_activity"
+            android:label="@string/title_activity_register_activity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

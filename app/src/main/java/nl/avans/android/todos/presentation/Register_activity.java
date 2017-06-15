@@ -3,8 +3,11 @@ package nl.avans.android.todos.presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,51 +29,54 @@ import nl.avans.android.todos.R;
 import nl.avans.android.todos.service.Config;
 import nl.avans.android.todos.service.VolleyRequestQueue;
 
-public class LoginActivity extends AppCompatActivity {
+public class Register_activity extends AppCompatActivity {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
-    private TextView txtLoginErrorMsg;
-    private Button btnLogin;
-    private TextView registerLink;
 
     private String mUsername;
     private String mPassword;
 
+    private TextView txtLoginErrorMsg;
+
+
+    private Button btnRegister;
+
+
+
     public final String TAG = this.getClass().getSimpleName();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register_activity);
 
-        editTextUsername = (EditText) findViewById(R.id.edittextUsername);
-        editTextPassword = (EditText) findViewById(R.id.edittextPassword);
-        txtLoginErrorMsg = (TextView) findViewById(R.id.txtLoginErrorMessage);
-        registerLink = (TextView) findViewById(R.id.link_to_register);
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent register = new Intent(getApplicationContext(), Register_activity.class);
-                startActivity(register);
-            }
-        });
-        btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+        editTextUsername = (EditText) findViewById(R.id.edittextUsernameRegister);
+        editTextPassword = (EditText) findViewById(R.id.edittextPasswordRegister);
+        txtLoginErrorMsg = (TextView) findViewById(R.id.txtLoginErrorMessageRegister);
+
+
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUsername = editTextUsername.getText().toString();
                 mPassword = editTextPassword.getText().toString();
+
                 txtLoginErrorMsg.setText("");
 
-                // TODO Checken of username en password niet leeg zijn
 
-                handleLogin(mUsername, mPassword);
+                handleRegister(mUsername, mPassword);
             }
         });
+
+
     }
 
-    private void handleLogin(String username, String password) {
+    private void handleRegister(String username, String password) {
         //
         // Maak een JSON object met username en password. Dit object sturen we mee
         // als request body (zoals je ook met Postman hebt gedaan)
@@ -81,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             JSONObject jsonBody = new JSONObject(body);
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.POST, Config.URL_LOGIN, jsonBody, new Response.Listener<JSONObject>() {
+                    (Request.Method.POST, Config.URL_REGISTER, jsonBody, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
@@ -93,28 +99,18 @@ public class LoginActivity extends AppCompatActivity {
                             // het token in SharedPreferences op te slaan. Op die manier
                             // is het token tussen app-stop en -herstart beschikbaar -
                             // totdat het token expired.
-                            try {
-                                String token = response.getString("token");
 
-                                Context context = getApplicationContext();
-                                SharedPreferences sharedPref = context.getSharedPreferences(
-                                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putString(getString(R.string.saved_token), token);
-                                editor.commit();
-                                displayMessage("Succesvol ingelogd!");
+                            Context context = getApplicationContext();
 
-                                // Start the main activity, and close the login activity
-                                Intent main = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(main);
-                                // Close the current activity
-                                finish();
+                            displayMessage("Succesvol Gerigistreerd!");
+
+                            // Start the main activity, and close the login activity
+                            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(login);
+                            // Close the current activity
+                            finish();
 
 
-                            } catch (JSONException e) {
-                                // e.printStackTrace();
-                                Log.e(TAG, e.getMessage());
-                            }
                         }
                     }, new Response.ErrorListener() {
 
@@ -181,3 +177,5 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), toastString, Toast.LENGTH_LONG).show();
     }
 }
+
+
