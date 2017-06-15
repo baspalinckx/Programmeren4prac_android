@@ -23,13 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ToDoDetailActivity"
-            android:parentActivityName=".presentation.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.MainActivity" />
-        </activity>
-        <activity
             android:name=".presentation.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".presentation.MainActivity">
@@ -37,7 +30,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.MainActivity" />
         </activity>
-        <activity android:name=".presentation.ToDoEditActivity" />
         <activity android:name=".presentation.LoginActivity" />
         <activity android:name=".presentation.FilmListActivity"></activity>
         <activity
