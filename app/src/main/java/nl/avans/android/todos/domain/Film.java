@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class Film implements Serializable{
 
-    private int film_id, language_id, original_language_id, rental_duration, length;
+    private int film_id, language_id, original_language_id, rental_duration, length, release_year;
     private String title, description, special_features, rating;
-    private Date release_year, last_update;
+    private Date last_update;
     private double rental_rate, replacement_cost;
 
     public int getFilm_id() {
@@ -86,11 +86,11 @@ public class Film implements Serializable{
         this.rating = rating;
     }
 
-    public Date getRelease_year() {
+    public int getRelease_year() {
         return release_year;
     }
 
-    public void setRelease_year(Date release_year) {
+    public void setRelease_year(int release_year) {
         this.release_year = release_year;
     }
 
