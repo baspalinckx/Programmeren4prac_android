@@ -26,10 +26,12 @@ import nl.avans.android.todos.domain.Customer;
 import nl.avans.android.todos.domain.Film;
 import nl.avans.android.todos.domain.Rental;
 import nl.avans.android.todos.domain.RentalAdapter;
+import nl.avans.android.todos.service.FilmRequest;
+import nl.avans.android.todos.service.RentalRequest;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, RentalRequest.RentalListener {
 
     // Logging tag
     public final String TAG = this.getClass().getSimpleName();
@@ -45,23 +47,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Dummy data voor film
-        final Film film = new Film();
-        film.setFilm_id(1);
-        film.setTitle("Test titel");
-
-        //Dumy data voor customer
-        Customer customer = new Customer();
-        customer.setFirst_name("Koen");
-        customer.setLast_name("Damme");
-        customer.setEmail("koendamme@test.nl");
-
-
-        //Dummy data voor rentals
-        Rental rental = new Rental();
-        rental.setFilm(film);
-        rental.setCustomer(customer);
-        rentals.add(rental);
 
 
         // We kijken hier eerst of de gebruiker nog een geldig token heeft.
@@ -78,7 +63,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     Intent newFilm = new Intent(getApplicationContext(), FilmListActivity.class);
-                    newFilm.putExtra("FILM", film);
+                    //newFilm.putExtra("FILM", film);
                     startActivity(newFilm);
                 }
             });
@@ -103,6 +88,7 @@ public class MainActivity extends AppCompatActivity
             //
             Log.d(TAG, "Token gevonden - ToDos ophalen!");
             //getToDos();
+            getRentals();
         } else {
             //
             // Blijkbaar was er geen token - eerst inloggen dus
@@ -124,22 +110,7 @@ public class MainActivity extends AppCompatActivity
      * @param resultCode
      * @param pData
      */
-//    protected void onActivityResult(int requestCode, int resultCode, Intent pData)
-//    {
-//        if ( requestCode == MY_REQUEST_CODE )
-//        {
-//            Log.v( TAG, "onActivityResult OK" );
-//            if (resultCode == Activity.RESULT_OK )
-//            {
-//                final ToDo newToDo = (ToDo) pData.getSerializableExtra(TODO_DATA);
-//                Log.v( TAG, "Retrieved Value newToDo is " + newToDo);
-//
-//                // We need to save our new ToDo
-//                postTodo(newToDo);
-//            }
-//        }
-//
-//    }
+
 
     /**
      * Check of een token in localstorage is opgeslagen. We checken niet de geldigheid -
@@ -244,59 +215,28 @@ public class MainActivity extends AppCompatActivity
 //        startActivity(intent);
     }
 
-    /**
-     * Callback function - handle an ArrayList of ToDos
-     *
-     * @param toDoArrayList
-     */
-//    @Override
-//    public void onToDosAvailable(ArrayList<Rental> rentalArrayList) {
-//
-//        Log.i(TAG, "We hebben " + toDoArrayList.size() + " items in de lijst");
-//
-//        rentals.clear();
-//        for(int i = 0; i < rentalArrayList.size(); i++) {
-//            rentals.add(rentalArrayList.get(i));
-//        }
-//        rentalAdapter.notifyDataSetChanged();
-//    }
+    @Override
+    public void onRentalsAvailable(ArrayList<Rental> rentalArrayList) {
+        rentals.clear();
+        for(int i = 0; i < rentalArrayList.size(); i++) {
+            rentals.add(rentalArrayList.get(i));
+        }
+        rentalAdapter.notifyDataSetChanged();
+    }
 
-    /**
-     * Callback function - handle a single ToDo
-     *
-     * //@param todo
-     */
-//    @Override
-//    public void onToDoAvailable(Rental rental) {
-//        rentals.add(rental);
-//        rentalAdapter.notifyDataSetChanged();
-//    }
-//
-//    /**
-//     * Callback function
-//     *
-//     * @param message
-//     */
-//    @Override
-//    public void onToDosError(String message) {
-//        Log.e(TAG, message);
-//        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-//    }
-//
-//    /**
-//     * Start the activity to GET all ToDos from the server.
-//     */
-//    private void getToDos(){
-//        ToDoRequest request = new ToDoRequest(getApplicationContext(), this);
-//        request.handleGetAllToDos();
-//    }
-//
-//    /**
-//     * Start the activity to POST a new ToDo to the server.
-//     */
-//    private void postTodo(ToDo todo){
-//        ToDoRequest request = new ToDoRequest(getApplicationContext(), this);
-//        request.handlePostToDo(todo);
-//    }
+    @Override
+    public void onRentalAvailable(Rental rental) {
+        rentals.add(rental);
+        rentalAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onRentalsError(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void getRentals() {
+        RentalRequest request = new RentalRequest(getApplicationContext(), this);
+        request.handleGetAllRentals(2);
+    }
 }

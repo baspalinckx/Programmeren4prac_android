@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -18,13 +19,20 @@ import java.util.Map;
 import nl.avans.android.todos.R;
 import nl.avans.android.todos.domain.Film;
 import nl.avans.android.todos.domain.FilmMapper;
-public class FilmRequest {
+import nl.avans.android.todos.domain.Rental;
+import nl.avans.android.todos.domain.RentalMapper;
+
+/**
+ * Created by koend on 15-6-2017.
+ */
+
+public class RentalRequest {
 
     private Context context;
     public final String TAG = this.getClass().getSimpleName();
 
     // De aanroepende class implementeert deze interface.
-    private FilmRequest.FilmListener listener;
+    private RentalRequest.RentalListener listener;
 
     /**
      * Constructor
@@ -32,12 +40,12 @@ public class FilmRequest {
      * @param context
      * @param listener
      */
-    public FilmRequest(Context context, FilmRequest.FilmListener listener) {
+    public RentalRequest(Context context, RentalRequest.RentalListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
-    public void handleGetAllFilms(int offset, int count) {
+    public void handleGetAllRentals(int customerId) {
 
         Log.i(TAG, "handleGetAllToDos");
 
@@ -49,14 +57,14 @@ public class FilmRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, "https://progprac.herokuapp.com/api/v1/films?offset=" + offset + "&count=" + count, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, "https://progprac.herokuapp.com/api/v1/rentals/" + customerId, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             // Succesvol response
                             Log.i(TAG, response.toString());
-                            ArrayList<Film> result = FilmMapper.mapFilmList(response);
-                            listener.onFilmsAvailable(result);
+                            ArrayList<Rental> result = RentalMapper.mapRentalList(response);
+                            listener.onRentalsAvailable(result);
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -140,17 +148,15 @@ public class FilmRequest {
     //
 
 
-    public interface FilmListener {
+    public interface RentalListener {
         // Callback function to return a fresh list of Films
-        void onFilmsAvailable(ArrayList<Film> films);
+        void onRentalsAvailable(ArrayList<Rental> rentals);
 
         // Callback function to handle a single added Film.
-        void onFilmAvailable(Film film);
+        void onRentalAvailable(Rental rental);
 
         // Callback to handle serverside API errors
-        void onFilmsError(String message);
+        void onRentalsError(String message);
     }
 
 }
-
-

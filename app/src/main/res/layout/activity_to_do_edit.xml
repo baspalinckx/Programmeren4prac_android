@@ -14,7 +14,6 @@
         android:layout_gravity="top"
         android:orientation="vertical">
 
-        <!--  ToDo title Label -->
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dip"
@@ -29,7 +28,6 @@
             android:layout_marginBottom="12dp"
             android:id="@+id/textEditToDoTitle"/>
 
-        <!--  ToDo description Label -->
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#372c24"
