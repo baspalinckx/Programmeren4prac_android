@@ -34,11 +34,8 @@ public class MainActivity extends AppCompatActivity
     // Logging tag
     public final String TAG = this.getClass().getSimpleName();
 
-    // The name for communicating Intents extras
-    public final static String TODO_DATA = "TODOS";
-
     // A request code for returning data from Intent - is supposed to be unique.
-    public static final int MY_REQUEST_CODE = 1234;
+    //public static final int MY_REQUEST_CODE = 1234;
 
     // UI Elements
     private ListView listViewRentals;
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Dummy data voor film
-        Film film = new Film();
+        final Film film = new Film();
         film.setFilm_id(1);
         film.setTitle("Test titel");
 
@@ -80,9 +77,9 @@ public class MainActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent newToDo = new Intent(getApplicationContext(), FilmListActivity.class);
-                    // We receive a ToDo object to be stored via the API.
-                    startActivityForResult( newToDo, MY_REQUEST_CODE );
+                    Intent newFilm = new Intent(getApplicationContext(), FilmListActivity.class);
+                    newFilm.putExtra("FILM", film);
+                    startActivity(newFilm);
                 }
             });
 
@@ -239,12 +236,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i(TAG, "Position " + position + " is geselecteerd");
-
-        Rental rental = rentals.get(position);
-        Intent intent = new Intent(getApplicationContext(), ToDoDetailActivity.class);
-        intent.putExtra(TODO_DATA, rental);
-        startActivity(intent);
+//        Log.i(TAG, "Position " + position + " is geselecteerd");
+//
+//        Rental rental = rentals.get(position);
+//        Intent intent = new Intent(getApplicationContext(), ToDoDetailActivity.class);
+//        intent.putExtra("RENTAL", rental);
+//        startActivity(intent);
     }
 
     /**
