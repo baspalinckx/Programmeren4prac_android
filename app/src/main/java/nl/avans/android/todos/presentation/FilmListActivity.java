@@ -26,10 +26,6 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_list);
 
-//        Film film = new Film();
-//        film.setTitle("TestFilm");
-//        filmList.add(film);
-
         filmListView = (ListView) findViewById(R.id.filmListView);
         filmAdapter = new FilmAdapter(this, filmList);
         filmListView.setAdapter(filmAdapter);

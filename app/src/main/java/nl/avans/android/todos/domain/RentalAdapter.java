@@ -32,7 +32,7 @@ public class RentalAdapter extends ArrayAdapter<Rental> {
         }
 
         TextView gehuurdeFilm = (TextView)convertView.findViewById(R.id.gehuurdeFilm);
-        gehuurdeFilm.setText(rental.getFilm().getTitle());
+        gehuurdeFilm.setText(rental.getFilmTitle());
 
         //koppel albumName en id aan de id's uit de mainactivity
 

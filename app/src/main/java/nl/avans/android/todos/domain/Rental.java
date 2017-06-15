@@ -9,17 +9,9 @@ import java.util.Date;
 
 public class Rental implements Serializable {
 
-    private Film film;
     private Date rental_date;
-    private Customer customer;
-
-    public Film getFilm() {
-        return film;
-    }
-
-    public void setFilm(Film film) {
-        this.film = film;
-    }
+    private String filmTitle, filmDescription, customerFirstName, customerLastName, filmRating;
+    private int releaseYear, filmId, customerId, filmLength;
 
     public Date getRental_date() {
         return rental_date;
@@ -29,11 +21,75 @@ public class Rental implements Serializable {
         this.rental_date = rental_date;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getFilmTitle() {
+        return filmTitle;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setFilmTitle(String filmTitle) {
+        this.filmTitle = filmTitle;
+    }
+
+    public String getFilmDescription() {
+        return filmDescription;
+    }
+
+    public void setFilmDescription(String filmDescription) {
+        this.filmDescription = filmDescription;
+    }
+
+    public String getCustomerFirstName() {
+        return customerFirstName;
+    }
+
+    public void setCustomerFirstName(String customerFirstName) {
+        this.customerFirstName = customerFirstName;
+    }
+
+    public String getCustomerLastName() {
+        return customerLastName;
+    }
+
+    public void setCustomerLastName(String customerLastName) {
+        this.customerLastName = customerLastName;
+    }
+
+    public String getFilmRating() {
+        return filmRating;
+    }
+
+    public void setFilmRating(String filmRating) {
+        this.filmRating = filmRating;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(int releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getFilmId() {
+        return filmId;
+    }
+
+    public void setFilmId(int filmId) {
+        this.filmId = filmId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getFilmLength() {
+        return filmLength;
+    }
+
+    public void setFilmLength(int filmLength) {
+        this.filmLength = filmLength;
     }
 }

@@ -51,7 +51,7 @@ public class FilmMapper {
                 result.add(film);
             }
         } catch( JSONException ex) {
-            Log.e("ToDoMapper", "onPostExecute JSONException " + ex.getLocalizedMessage());
+            Log.e("FilmMapper", "onPostExecute JSONException " + ex.getLocalizedMessage());
         }
         return result;
     }
