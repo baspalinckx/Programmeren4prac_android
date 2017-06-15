@@ -53,8 +53,7 @@ public class FilmRequest {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         final String token = sharedPref.getString(context.getString(R.string.saved_token), "dummy default token");
-        //if(token != null && !token.equals("dummy default token")) {
-        if(true) {
+        if(token != null && !token.equals("dummy default token")) {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -78,7 +77,7 @@ public class FilmRequest {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTc2OTc0NTAsImlhdCI6MTQ5NzUyNDY1MCwic3ViIjoia29lbjMifQ.6bqTVdzyNbzIoLLUeTokq9M33cd1kKDZ3Zv7LKk4WIM");
+                    headers.put("Authorization", "Bearer " + token);
                     return headers;
                 }
             };

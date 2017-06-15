@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         // Het token is opgeslagen in SharedPreferences.
         // Mocht er geen token zijn, of het token is expired, dan moeten we
         // eerst opnieuw inloggen.
-        if(true){
+        if(tokenAvailable()){
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
