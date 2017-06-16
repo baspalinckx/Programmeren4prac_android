@@ -3,11 +3,13 @@ package nl.avans.android.todos.presentation;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import nl.avans.android.todos.R;
@@ -15,11 +17,14 @@ import nl.avans.android.todos.domain.Film;
 import nl.avans.android.todos.domain.FilmAdapter;
 import nl.avans.android.todos.service.FilmRequest;
 
-public class FilmListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, FilmRequest.FilmListener {
+public class FilmListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, FilmRequest.FilmListener, Serializable {
 
     private ArrayList<Film> filmList = new ArrayList<>();
     private FilmAdapter filmAdapter;
     private ListView filmListView;
+
+    public final static String FILMDATA = "FILMS";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,12 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //niks
+
+            Film film = filmList.get(position);
+            Intent intent = new Intent(getApplicationContext(), FilmDetail.class);
+            intent.putExtra(FILMDATA, film);
+            startActivity(intent);
+
     }
 
     @Override
