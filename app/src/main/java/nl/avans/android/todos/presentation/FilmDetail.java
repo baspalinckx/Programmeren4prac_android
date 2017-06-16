@@ -1,26 +1,34 @@
 package nl.avans.android.todos.presentation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import nl.avans.android.todos.R;
 import nl.avans.android.todos.domain.Film;
+import nl.avans.android.todos.domain.Rental;
+import nl.avans.android.todos.service.CreateRentalRequest;
+import nl.avans.android.todos.service.RentalRequest;
 
 import static nl.avans.android.todos.presentation.FilmListActivity.FILMDATA;
 
 
-public class FilmDetail extends AppCompatActivity {
+public class FilmDetail extends AppCompatActivity implements RentalRequest.RentalListener {
 
     private TextView textTitle;
     private TextView textDescription;
     private TextView textFeature;
     private TextView textRating;
     private TextView textLength;
-    private Button reserveerButton;
+    private Button reserveerButton, homeButton;
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -33,8 +41,24 @@ public class FilmDetail extends AppCompatActivity {
         textFeature = (TextView) findViewById(R.id.textDetailFilmSpecialFeature);
         textRating = (TextView) findViewById(R.id.textDetailFilmRating);
         textLength = (TextView) findViewById(R.id.textDetailFilmLength);
+        homeButton = (Button) findViewById(R.id.homeKnop);
 
         reserveerButton = (Button) findViewById(R.id.ReserveerButton);
+        reserveerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
+                request.handleCreateRental(1,1);
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
 
@@ -56,5 +80,20 @@ public class FilmDetail extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRentalsAvailable(ArrayList<Rental> rentals) {
+
+    }
+
+    @Override
+    public void onRentalAvailable(Rental rental) {
+
+    }
+
+    @Override
+    public void onRentalsError(String message) {
+
     }
 }

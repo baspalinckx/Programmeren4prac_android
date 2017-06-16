@@ -11,43 +11,32 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.avans.android.todos.R;
-import nl.avans.android.todos.domain.Film;
-import nl.avans.android.todos.domain.FilmMapper;
-import nl.avans.android.todos.domain.Rental;
-import nl.avans.android.todos.domain.RentalMapper;
 
 /**
- * Created by koend on 15-6-2017.
+ * Created by koend on 16-6-2017.
  */
 
-public class RentalRequest {
+public class CreateRentalRequest {
 
     private Context context;
     public final String TAG = this.getClass().getSimpleName();
-
-    // De aanroepende class implementeert deze interface.
-    private RentalRequest.RentalListener listener;
 
     /**
      * Constructor
      *
      * @param context
-     * @param listener
      */
-    public RentalRequest(Context context, RentalRequest.RentalListener listener) {
+    public CreateRentalRequest(Context context) {
         this.context = context;
-        this.listener = listener;
     }
 
-    public void handleGetAllRentals(int customerId) {
+    public void handleCreateRental (int userId, int inventoryId) {
 
-        Log.i(TAG, "handleGetAllToDos");
+        Log.i(TAG, "handleCreateRental");
 
         // Haal het token uit de prefs
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -57,14 +46,14 @@ public class RentalRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, "https://progprac.herokuapp.com/api/v1/rentals/" + customerId, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.POST, "http://progprac.herokuapp.com/api/v1/rentals/1" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             // Succesvol response
                             Log.i(TAG, response.toString());
-                            ArrayList<Rental> result = RentalMapper.mapRentalList(response);
-                            listener.onRentalsAvailable(result);
+//                            ArrayList<Rental> result = RentalMapper.mapRentalList(response);
+//                            listener.onRentalsAvailable(result);
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -85,22 +74,8 @@ public class RentalRequest {
             // Access the RequestQueue through your singleton class.
             VolleyRequestQueue.getInstance(context).addToRequestQueue(jsObjRequest);
         }
+
     }
 
-    //
-    // Callback interface - implemented by the calling class (MainActivity in our case).
-    //
-
-
-    public interface RentalListener {
-        // Callback function to return a fresh list of Films
-        void onRentalsAvailable(ArrayList<Rental> rentals);
-
-        // Callback function to handle a single added Film.
-        void onRentalAvailable(Rental rental);
-
-        // Callback to handle serverside API errors
-        void onRentalsError(String message);
-    }
 
 }

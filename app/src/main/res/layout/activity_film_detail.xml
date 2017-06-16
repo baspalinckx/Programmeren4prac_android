@@ -55,6 +55,12 @@
             android:layout_height="wrap_content"
             android:text="Reserveren" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeKnop"
+            android:text="home"/>
+
     </LinearLayout>
 
 
