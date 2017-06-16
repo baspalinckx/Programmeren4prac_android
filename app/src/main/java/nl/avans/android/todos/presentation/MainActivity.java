@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
 
     // Logging tag
     public final String TAG = this.getClass().getSimpleName();
+    public final static String RENTALDATA = "RENTALS";
 
     // A request code for returning data from Intent - is supposed to be unique.
     //public static final int MY_REQUEST_CODE = 1234;
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity
 
         Rental rental = rentals.get(position);
         Intent intent = new Intent(getApplicationContext(), RentalDetailActivity.class);
-        intent.putExtra("RENTAL", rental);
+        intent.putExtra(RENTALDATA, rental);
         startActivity(intent);
     }
 
