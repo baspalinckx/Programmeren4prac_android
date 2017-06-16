@@ -207,12 +207,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Log.i(TAG, "Position " + position + " is geselecteerd");
-//
-//        Rental rental = rentals.get(position);
-//        Intent intent = new Intent(getApplicationContext(), ToDoDetailActivity.class);
-//        intent.putExtra("RENTAL", rental);
-//        startActivity(intent);
+        Log.i(TAG, "Position " + position + " is geselecteerd");
+
+        Rental rental = rentals.get(position);
+        Intent intent = new Intent(getApplicationContext(), RentalDetailActivity.class);
+        intent.putExtra("RENTAL", rental);
+        startActivity(intent);
     }
 
     @Override
