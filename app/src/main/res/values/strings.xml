@@ -86,4 +86,5 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_register_activity">Register_activity</string>
+    <string name="title_activity_film_detail">FilmDetail</string>
 </resources>
