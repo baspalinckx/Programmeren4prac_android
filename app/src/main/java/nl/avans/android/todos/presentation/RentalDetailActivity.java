@@ -1,15 +1,18 @@
 package nl.avans.android.todos.presentation;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import nl.avans.android.todos.R;
 import nl.avans.android.todos.domain.Film;
 import nl.avans.android.todos.domain.Rental;
+import nl.avans.android.todos.service.CreateRentalRequest;
 
 import static nl.avans.android.todos.presentation.FilmListActivity.FILMDATA;
 import static nl.avans.android.todos.presentation.MainActivity.RENTALDATA;
@@ -22,6 +25,8 @@ public class RentalDetailActivity extends AppCompatActivity {
     private TextView textDateRental;
     private TextView textLengthRental;
     private Button inleverButton;
+    int customerId;
+    Intent intent;
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -35,7 +40,20 @@ public class RentalDetailActivity extends AppCompatActivity {
         textLengthRental = (TextView) findViewById(R.id.textDetailRentalLength);
         textDateRental = (TextView) findViewById(R.id.textDetailRentalDate);
 
+        //customerId = (Integer) intent.getSerializableExtra("ID");
+
         inleverButton = (Button) findViewById(R.id.InleverButton);
+        inleverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
+                request.handleCreateRental(customerId, 1);
+                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
+                intent.putExtra("ID", customerId);
+                finish();
+                startActivity(intent);
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
 
