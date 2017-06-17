@@ -110,8 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                 main.putExtra("ID", customerId);
                                 startActivity(main);
                                 // Close the current activity
-                                //finish();
-
+                                finish();
 
                             } catch (JSONException e) {
                                 // e.printStackTrace();
