@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,8 +24,10 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
     private ArrayList<Film> filmList = new ArrayList<>();
     private FilmAdapter filmAdapter;
     private ListView filmListView;
+    private Button meerWeergevenknop;
     int customerId;
     Intent intent;
+    int count = 10;
 
     public final static String FILMDATA = "FILMS";
 
@@ -40,7 +44,34 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
         filmListView.setAdapter(filmAdapter);
         filmListView.setOnItemClickListener(this);
         this.filmAdapter.notifyDataSetChanged();
+
         getFilms();
+//        meerWeergevenknop = (Button) findViewById(R.id.meerWeergevenKnop);
+//        meerWeergevenknop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+        filmListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                        && (filmListView.getLastVisiblePosition() - filmListView.getHeaderViewsCount() -
+                        filmListView.getFooterViewsCount()) >= (filmAdapter.getCount() - 1)) {
+
+                    count += 10;
+                    getFilms();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 
     @Override
@@ -75,6 +106,6 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
 
     public void getFilms() {
         FilmRequest request = new FilmRequest(getApplicationContext(), this);
-        request.handleGetAllFilms(0, 10);
+        request.handleGetAllFilms(0, count);
     }
 }
