@@ -46,7 +46,7 @@ public class CreateRentalRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.POST, "http://progprac.herokuapp.com/api/v1/rentals/1" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.POST, "http://progprac.herokuapp.com/api/v1/rentals/" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
@@ -66,7 +66,7 @@ public class CreateRentalRequest {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Bearer " + token);
+                    headers.put("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTc4NjAwMTcsImlhdCI6MTQ5NzY4NzIxNywic3ViIjoia29lbjMifQ.WYcmICN_AkYHDeiMAk6zaa67BPLpSYHpgxZ0DkF2uxQ");
                     return headers;
                 }
             };

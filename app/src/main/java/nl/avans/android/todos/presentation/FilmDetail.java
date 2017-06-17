@@ -36,6 +36,11 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_detail);
+
+        Bundle extras = getIntent().getExtras();
+
+        final Film film = (Film) extras.getSerializable(FILMDATA);
+
         textTitle = (TextView) findViewById(R.id.textDetailFilmTitle);
         textDescription = (TextView) findViewById(R.id.textDetailFilmDescription);
         textFeature = (TextView) findViewById(R.id.textDetailFilmSpecialFeature);
@@ -48,7 +53,7 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
             @Override
             public void onClick(View v) {
                 CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
-                request.handleCreateRental(1,1);
+                request.handleCreateRental(2, film.getInventoryId());
             }
         });
 
@@ -60,9 +65,6 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
             }
         });
 
-        Bundle extras = getIntent().getExtras();
-
-        Film film = (Film) extras.getSerializable(FILMDATA);
         Log.i(TAG, film.toString());
 
         textTitle.setText(film.getTitle());

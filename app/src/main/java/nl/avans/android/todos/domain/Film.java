@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Film implements Serializable{
 
-    private int film_id, language_id, original_language_id, rental_duration, length, release_year;
+    private int film_id, language_id, original_language_id, rental_duration, length, release_year, inventoryId;
     private String title, description, special_features, rating;
     private Date last_update;
     private double rental_rate, replacement_cost;
@@ -116,5 +116,13 @@ public class Film implements Serializable{
 
     public void setReplacement_cost(double replacement_cost) {
         this.replacement_cost = replacement_cost;
+    }
+
+    public int getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 }
