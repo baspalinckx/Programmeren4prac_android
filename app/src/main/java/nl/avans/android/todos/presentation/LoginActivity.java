@@ -95,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                             // totdat het token expired.
                             try {
                                 String token = response.getString("token");
+                                int customerId = response.getInt("customer_id");
 
                                 Context context = getApplicationContext();
                                 SharedPreferences sharedPref = context.getSharedPreferences(
@@ -106,10 +107,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                 // Start the main activity, and close the login activity
                                 Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                                main.putExtra("ID", customerId);
                                 startActivity(main);
                                 // Close the current activity
                                 finish();
-
 
                             } catch (JSONException e) {
                                 // e.printStackTrace();

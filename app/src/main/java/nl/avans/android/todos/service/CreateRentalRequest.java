@@ -9,37 +9,34 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.avans.android.todos.R;
-import nl.avans.android.todos.domain.Film;
-import nl.avans.android.todos.domain.FilmMapper;
-public class FilmRequest {
+
+/**
+ * Created by koend on 16-6-2017.
+ */
+
+public class CreateRentalRequest {
 
     private Context context;
     public final String TAG = this.getClass().getSimpleName();
-
-    // De aanroepende class implementeert deze interface.
-    private FilmRequest.FilmListener listener;
 
     /**
      * Constructor
      *
      * @param context
-     * @param listener
      */
-    public FilmRequest(Context context, FilmRequest.FilmListener listener) {
+    public CreateRentalRequest(Context context) {
         this.context = context;
-        this.listener = listener;
     }
 
-    public void handleGetAllFilms(int offset, int count) {
+    public void handleCreateRental (int userId, int inventoryId) {
 
-        Log.i(TAG, "handleGetAllToDos");
+        Log.i(TAG, "handleCreateRental");
 
         // Haal het token uit de prefs
         SharedPreferences sharedPref = context.getSharedPreferences(
@@ -49,14 +46,14 @@ public class FilmRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, "https://progprac.herokuapp.com/api/v1/films?offset=" + offset + "&count=" + count, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.POST, "http://progprac.herokuapp.com/api/v1/rentals/" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
                             // Succesvol response
                             Log.i(TAG, response.toString());
-                            ArrayList<Film> result = FilmMapper.mapFilmList(response);
-                            listener.onFilmsAvailable(result);
+//                            ArrayList<Rental> result = RentalMapper.mapRentalList(response);
+//                            listener.onRentalsAvailable(result);
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -69,7 +66,7 @@ public class FilmRequest {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Bearer " + token);
+                    headers.put("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTc4NjAwMTcsImlhdCI6MTQ5NzY4NzIxNywic3ViIjoia29lbjMifQ.WYcmICN_AkYHDeiMAk6zaa67BPLpSYHpgxZ0DkF2uxQ");
                     return headers;
                 }
             };
@@ -77,24 +74,8 @@ public class FilmRequest {
             // Access the RequestQueue through your singleton class.
             VolleyRequestQueue.getInstance(context).addToRequestQueue(jsObjRequest);
         }
+
     }
 
-    //
-    // Callback interface - implemented by the calling class (MainActivity in our case).
-    //
-
-
-    public interface FilmListener {
-        // Callback function to return a fresh list of Films
-        void onFilmsAvailable(ArrayList<Film> films);
-
-        // Callback function to handle a single added Film.
-        void onFilmAvailable(Film film);
-
-        // Callback to handle serverside API errors
-        void onFilmsError(String message);
-    }
 
 }
-
-

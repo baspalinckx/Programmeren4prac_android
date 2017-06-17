@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by koend on 15-6-2017.
  */
 
-public class RentalMapper {
+public class   RentalMapper {
 
     public static ArrayList<Rental> mapRentalList(JSONObject response){
 
