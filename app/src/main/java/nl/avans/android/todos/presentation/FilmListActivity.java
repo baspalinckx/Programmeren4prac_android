@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
     private ArrayList<Film> filmList = new ArrayList<>();
     private FilmAdapter filmAdapter;
     private ListView filmListView;
+    private Button meerKnop;
 
     public final static String FILMDATA = "FILMS";
 
@@ -29,8 +31,7 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_film_list);
-
+        meerKnop = (Button) findViewById(R.id.meerKnop);
         filmListView = (ListView) findViewById(R.id.filmListView);
         filmAdapter = new FilmAdapter(this, filmList);
         filmListView.setAdapter(filmAdapter);
@@ -71,6 +72,19 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
 
     public void getFilms() {
         FilmRequest request = new FilmRequest(getApplicationContext(), this);
+
+//        final int offset = 0;
+//        final int count = 10;
         request.handleGetAllFilms(0, 10);
+
+//        meerKnop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                request.handleGetAllFilms(offset + 10, count + 10);
+//
+//
+//            }
+//        });
+
     }
 }

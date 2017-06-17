@@ -7,8 +7,18 @@
     tools:context="nl.avans.android.todos.presentation.FilmListActivity">
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/filmListView"></ListView>
+        android:layout_width="366dp"
+        android:layout_height="428dp"
+        android:id="@+id/filmListView"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"></ListView>
+
+    <Button
+        android:id="@+id/meerKnop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteY="447dp"
+        tools:layout_editor_absoluteX="148dp" />
 
 </android.support.constraint.ConstraintLayout>
