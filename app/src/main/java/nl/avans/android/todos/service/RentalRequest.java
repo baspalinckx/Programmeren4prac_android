@@ -45,6 +45,9 @@ public class RentalRequest {
         this.listener = listener;
     }
 
+
+
+
     public void handleGetAllRentals(int customerId) {
 
         Log.i(TAG, "handleGetAllToDos");

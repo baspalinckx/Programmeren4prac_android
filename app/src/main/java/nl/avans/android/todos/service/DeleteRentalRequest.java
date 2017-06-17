@@ -11,17 +11,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.avans.android.todos.R;
 
 /**
- * Created by koend on 16-6-2017.
+ * Created by Bas Palinckx on 17-6-2017.
  */
 
-public class CreateRentalRequest {
-
+public class DeleteRentalRequest {
     private Context context;
     public final String TAG = this.getClass().getSimpleName();
 
@@ -30,11 +30,11 @@ public class CreateRentalRequest {
      *
      * @param context
      */
-    public CreateRentalRequest(Context context) {
+    public DeleteRentalRequest(Context context) {
         this.context = context;
     }
 
-    public void handleCreateRental (int userId, int inventoryId) {
+    public void handleDeleteRental (int userId, int inventoryId) {
 
         Log.i(TAG, "handleCreateRental");
 
@@ -46,7 +46,7 @@ public class CreateRentalRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.POST, "http://progprac.herokuapp.com/api/v1/rentals/" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.DELETE, "http://progprac.herokuapp.com/api/v1/rentals/" + userId + "/" + inventoryId, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
