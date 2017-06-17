@@ -87,9 +87,9 @@ public class RentalRequest {
         }
     }
 
-    //
-    // Callback interface - implemented by the calling class (MainActivity in our case).
-    //
+
+    //deze methode moet een rental gaan toevoegen, maar snap niet helemaal waar we inventory id vandaan halen.
+    
 
 
     public interface RentalListener {

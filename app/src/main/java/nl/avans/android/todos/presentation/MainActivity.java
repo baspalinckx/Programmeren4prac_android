@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
     // Logging tag
     public final String TAG = this.getClass().getSimpleName();
+    public final static String RENTALDATA = "RENTALS";
 
     // A request code for returning data from Intent - is supposed to be unique.
     //public static final int MY_REQUEST_CODE = 1234;
@@ -170,12 +171,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Log.i(TAG, "Position " + position + " is geselecteerd");
-//
-//        Rental rental = rentals.get(position);
-//        Intent intent = new Intent(getApplicationContext(), ToDoDetailActivity.class);
-//        intent.putExtra("RENTAL", rental);
-//        startActivity(intent);
+        Log.i(TAG, "Position " + position + " is geselecteerd");
+
+        Rental rental = rentals.get(position);
+        Intent intent = new Intent(getApplicationContext(), RentalDetailActivity.class);
+        intent.putExtra(RENTALDATA, rental);
+        startActivity(intent);
     }
 
     @Override

@@ -46,7 +46,8 @@
             android:name=".presentation.Register_activity"
             android:label="@string/title_activity_register_activity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".presentation.FilmDetail"></activity>
+        <activity android:name=".presentation.FilmDetail" />
+        <activity android:name=".presentation.RentalDetailActivity"></activity>
     </application>
 
 </manifest>
