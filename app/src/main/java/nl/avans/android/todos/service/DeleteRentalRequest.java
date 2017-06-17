@@ -36,7 +36,7 @@ public class DeleteRentalRequest {
 
     public void handleDeleteRental (int userId, int inventoryId) {
 
-        Log.i(TAG, "handleCreateRental");
+        Log.i(TAG, "handleDeleteRental");
 
         // Haal het token uit de prefs
         SharedPreferences sharedPref = context.getSharedPreferences(

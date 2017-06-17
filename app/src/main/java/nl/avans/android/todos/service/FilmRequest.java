@@ -39,7 +39,7 @@ public class FilmRequest {
 
     public void handleGetAllFilms(int offset, int count) {
 
-        Log.i(TAG, "handleGetAllToDos");
+        Log.i(TAG, "handleGetAllFilms");
 
         // Haal het token uit de prefs
         SharedPreferences sharedPref = context.getSharedPreferences(

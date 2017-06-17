@@ -50,7 +50,7 @@ public class RentalRequest {
 
     public void handleGetAllRentals(int customerId) {
 
-        Log.i(TAG, "handleGetAllToDos");
+        Log.i(TAG, "handleGetAllFilms");
 
         // Haal het token uit de prefs
         SharedPreferences sharedPref = context.getSharedPreferences(

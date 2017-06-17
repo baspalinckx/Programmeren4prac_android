@@ -26,7 +26,7 @@ public class RentalDetailActivity extends AppCompatActivity {
     private TextView textLengthRental;
     private Button inleverButton;
     int customerId;
-    Intent intent;
+
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -40,7 +40,6 @@ public class RentalDetailActivity extends AppCompatActivity {
         textLengthRental = (TextView) findViewById(R.id.textDetailRentalLength);
         textDateRental = (TextView) findViewById(R.id.textDetailRentalDate);
 
-        //customerId = (Integer) intent.getSerializableExtra("ID");
 
         inleverButton = (Button) findViewById(R.id.InleverButton);
         inleverButton.setOnClickListener(new View.OnClickListener() {
