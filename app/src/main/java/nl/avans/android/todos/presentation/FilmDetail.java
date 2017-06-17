@@ -60,6 +60,7 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
                 request.handleCreateRental(customerId, 1);
                 Intent intent = new Intent (getApplicationContext(), MainActivity.class);
                 intent.putExtra("ID", customerId);
+                finish();
                 startActivity(intent);
             }
         });
