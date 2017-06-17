@@ -29,6 +29,8 @@ import nl.avans.android.todos.domain.RentalAdapter;
 import nl.avans.android.todos.service.FilmRequest;
 import nl.avans.android.todos.service.RentalRequest;
 
+import static nl.avans.android.todos.presentation.FilmListActivity.FILMDATA;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         AdapterView.OnItemClickListener, RentalRequest.RentalListener {
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity
     private ListView listViewRentals;
     private RentalAdapter rentalAdapter;
     private ArrayList<Rental> rentals = new ArrayList<>();
+
+    Intent intent = getIntent();
+    int customerId = (Integer) intent.getSerializableExtra("ID");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +242,6 @@ public class MainActivity extends AppCompatActivity
 
     public void getRentals() {
         RentalRequest request = new RentalRequest(getApplicationContext(), this);
-        request.handleGetAllRentals(2);
+        request.handleGetAllRentals(customerId);
     }
 }
