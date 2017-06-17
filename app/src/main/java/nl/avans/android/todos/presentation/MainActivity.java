@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private ListView listViewRentals;
     private RentalAdapter rentalAdapter;
     private ArrayList<Rental> rentals = new ArrayList<>();
+    Intent intent;
+    int customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +56,19 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        intent = getIntent();
+        customerId = (Integer) intent.getSerializableExtra("ID");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent newFilm = new Intent(getApplicationContext(), FilmListActivity.class);
-                //newFilm.putExtra("FILM", film);
+                newFilm.putExtra("ID", customerId);
                 startActivity(newFilm);
             }
         });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,34 +93,6 @@ public class MainActivity extends AppCompatActivity
         getRentals();
     }
 
-    /**
-     * Aangeroepen door terugkerende Intents. Maakt het mogelijk om data
-     * terug te ontvangen van een Intent.
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param pData
-     */
-
-
-    /**
-     * Check of een token in localstorage is opgeslagen. We checken niet de geldigheid -
-     * alleen of het token bestaat.
-     *
-     * @return
-     */
-    private boolean tokenAvailable() {
-        boolean result = false;
-
-        Context context = getApplicationContext();
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String token = sharedPref.getString(getString(R.string.saved_token), "dummy default token");
-        if (token != null && !token.equals("dummy default token")) {
-            result = true;
-        }
-        return result;
-    }
 
     @Override
     public void onBackPressed() {
@@ -222,8 +199,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getRentals() {
-        Intent intent = getIntent();
-        int customerId = (Integer) intent.getSerializableExtra("ID");
 
         RentalRequest request = new RentalRequest(getApplicationContext(), this);
         request.handleGetAllRentals(customerId);

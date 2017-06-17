@@ -28,39 +28,38 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
     private TextView textFeature;
     private TextView textRating;
     private TextView textLength;
-    private Button reserveerButton, homeButton;
+    private Button reserveerButton;
 
     public final String TAG = this.getClass().getSimpleName();
+
+    Intent intent;
+    int customerId;
+    Film film;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_detail);
 
-        Bundle extras = getIntent().getExtras();
+        intent = getIntent();
 
-        final Film film = (Film) extras.getSerializable(FILMDATA);
+        film = (Film) intent.getSerializableExtra(FILMDATA);
+        customerId = (Integer) intent.getSerializableExtra("ID");
 
         textTitle = (TextView) findViewById(R.id.textDetailFilmTitle);
         textDescription = (TextView) findViewById(R.id.textDetailFilmDescription);
         textFeature = (TextView) findViewById(R.id.textDetailFilmSpecialFeature);
         textRating = (TextView) findViewById(R.id.textDetailFilmRating);
         textLength = (TextView) findViewById(R.id.textDetailFilmLength);
-        homeButton = (Button) findViewById(R.id.homeKnop);
 
         reserveerButton = (Button) findViewById(R.id.ReserveerButton);
         reserveerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
-                request.handleCreateRental(2, film.getInventoryId());
-            }
-        });
-
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                request.handleCreateRental(customerId, 1);
                 Intent intent = new Intent (getApplicationContext(), MainActivity.class);
+                intent.putExtra("ID", customerId);
                 startActivity(intent);
             }
         });

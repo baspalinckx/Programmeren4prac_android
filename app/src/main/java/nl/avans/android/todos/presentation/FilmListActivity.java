@@ -22,6 +22,8 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
     private ArrayList<Film> filmList = new ArrayList<>();
     private FilmAdapter filmAdapter;
     private ListView filmListView;
+    int customerId;
+    Intent intent;
 
     public final static String FILMDATA = "FILMS";
 
@@ -30,6 +32,8 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film_list);
+        intent = getIntent();
+        customerId = (Integer) intent.getSerializableExtra("ID");
 
         filmListView = (ListView) findViewById(R.id.filmListView);
         filmAdapter = new FilmAdapter(this, filmList);
@@ -41,18 +45,18 @@ public class FilmListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            Film film = filmList.get(position);
-            Intent intent = new Intent(getApplicationContext(), FilmDetail.class);
-            intent.putExtra(FILMDATA, film);
-            startActivity(intent);
+        Film film = filmList.get(position);
+        Intent intent = new Intent(getApplicationContext(), FilmDetail.class);
+        intent.putExtra(FILMDATA, film);
+        intent.putExtra("ID", customerId);
+        startActivity(intent);
 
     }
 
     @Override
     public void onFilmsAvailable(ArrayList<Film> filmArrayList) {
         filmList.clear();
-        for(int i = 0; i < filmArrayList.size(); i++) {
+        for (int i = 0; i < filmArrayList.size(); i++) {
             filmList.add(filmArrayList.get(i));
         }
         filmAdapter.notifyDataSetChanged();
