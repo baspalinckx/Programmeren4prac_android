@@ -11,7 +11,7 @@ public class Rental implements Serializable {
 
     private Date rental_date;
     private String filmTitle, filmDescription, customerFirstName, customerLastName, filmRating;
-    private int releaseYear, filmId, customerId, filmLength;
+    private int releaseYear, filmId, customerId, filmLength, inventoryId;
 
     public Date getRental_date() {
         return rental_date;
@@ -91,5 +91,13 @@ public class Rental implements Serializable {
 
     public void setFilmLength(int filmLength) {
         this.filmLength = filmLength;
+    }
+
+    public int getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 }
