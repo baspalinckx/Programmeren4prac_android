@@ -84,14 +84,11 @@ public class MainActivity extends AppCompatActivity
         listViewRentals.setOnItemClickListener(this);
         rentalAdapter = new RentalAdapter(this, rentals);
         listViewRentals.setAdapter(rentalAdapter);
-        //
-        // We hebben een token. Je zou eerst nog kunnen valideren dat het token nog
-        // geldig is; dat doen we nu niet.
-        // Vul de lijst met ToDos
-        //
-        Log.d(TAG, "Token gevonden - ToDos ophalen!");
-        //getToDos();
+
+        Log.d(TAG, "Token gevonden - Rentals ophalen!");
+
         getRentals();
+
     }
 
 

@@ -57,7 +57,7 @@ public class FilmDetail extends AppCompatActivity implements RentalRequest.Renta
             @Override
             public void onClick(View v) {
                 CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
-                request.handleCreateRental(customerId, 1);
+                request.handleCreateRental(customerId, film.getInventoryId());
                 Intent intent = new Intent (getApplicationContext(), MainActivity.class);
                 intent.putExtra("ID", customerId);
                 finish();

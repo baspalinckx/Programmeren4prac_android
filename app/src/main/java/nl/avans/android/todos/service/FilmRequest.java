@@ -49,7 +49,7 @@ public class FilmRequest {
 
             Log.i(TAG, "Token gevonden, we gaan het request uitvoeren");
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                    (Request.Method.GET, "https://progprac.herokuapp.com/api/v1/films?offset=" + offset + "&count=" + count, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.GET, "http://progprac.herokuapp.com/api/v1/films?offset=" + offset + "&count=" + count, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {

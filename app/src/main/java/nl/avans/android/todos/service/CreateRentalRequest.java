@@ -66,7 +66,7 @@ public class CreateRentalRequest {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTc4NjAwMTcsImlhdCI6MTQ5NzY4NzIxNywic3ViIjoia29lbjMifQ.WYcmICN_AkYHDeiMAk6zaa67BPLpSYHpgxZ0DkF2uxQ");
+                    headers.put("Authorization", "Bearer " + token);
                     return headers;
                 }
             };

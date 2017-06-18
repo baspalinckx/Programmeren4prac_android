@@ -29,7 +29,6 @@ public class FilmMapper {
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonProduct = jsonArray.getJSONObject(i);
 
-                // Convert stringdate to Date
                 String title = jsonProduct.getString("title");
                 String description = jsonProduct.getString("description");
                 int releaseYear = jsonProduct.getInt("release_year");
@@ -37,6 +36,7 @@ public class FilmMapper {
                 int lenght = jsonProduct.getInt("length");
                 String rating = jsonProduct.getString("rating");
                 String specialFeatures = jsonProduct.getString("special_features");
+                int inventoryId = jsonProduct.getInt("inventory_id");
 
                 //DateTime todoDateTime = ISODateTimeFormat.dateTimeParser().parseDateTime(timestamp);
 
@@ -48,6 +48,7 @@ public class FilmMapper {
                 film.setLength(lenght);
                 film.setRating(rating);
                 film.setSpecial_features(specialFeatures);
+                film.setInventoryId(inventoryId);
                 result.add(film);
             }
         } catch( JSONException ex) {
