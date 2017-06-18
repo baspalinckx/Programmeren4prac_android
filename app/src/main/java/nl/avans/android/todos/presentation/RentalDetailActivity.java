@@ -13,6 +13,7 @@ import nl.avans.android.todos.R;
 import nl.avans.android.todos.domain.Film;
 import nl.avans.android.todos.domain.Rental;
 import nl.avans.android.todos.service.CreateRentalRequest;
+import nl.avans.android.todos.service.DeleteRentalRequest;
 
 import static nl.avans.android.todos.presentation.FilmListActivity.FILMDATA;
 import static nl.avans.android.todos.presentation.MainActivity.RENTALDATA;
@@ -25,7 +26,6 @@ public class RentalDetailActivity extends AppCompatActivity {
     private TextView textDateRental;
     private TextView textLengthRental;
     private Button inleverButton;
-    int customerId;
 
 
     public final String TAG = this.getClass().getSimpleName();
@@ -40,13 +40,18 @@ public class RentalDetailActivity extends AppCompatActivity {
         textLengthRental = (TextView) findViewById(R.id.textDetailRentalLength);
         textDateRental = (TextView) findViewById(R.id.textDetailRentalDate);
 
+        Intent intent = getIntent();
+
+        final Rental rental = (Rental) intent.getSerializableExtra(RENTALDATA);
+        final int customerId = (Integer) intent.getSerializableExtra("ID");
+
 
         inleverButton = (Button) findViewById(R.id.InleverButton);
         inleverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateRentalRequest request = new CreateRentalRequest(getApplicationContext());
-                request.handleCreateRental(customerId, 1);
+                DeleteRentalRequest request = new DeleteRentalRequest(getApplicationContext());
+                request.handleDeleteRental(customerId, rental.getInventoryId());
                 Intent intent = new Intent (getApplicationContext(), MainActivity.class);
                 intent.putExtra("ID", customerId);
                 finish();
@@ -54,9 +59,7 @@ public class RentalDetailActivity extends AppCompatActivity {
             }
         });
 
-        Bundle extras = getIntent().getExtras();
 
-        Rental rental = (Rental) extras.getSerializable(RENTALDATA);
         Log.i(TAG, rental.toString());
 
         textTitleRental.setText(rental.getFilmTitle());

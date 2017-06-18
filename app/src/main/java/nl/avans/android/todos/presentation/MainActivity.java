@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity
 
         Rental rental = rentals.get(position);
         Intent intent = new Intent(getApplicationContext(), RentalDetailActivity.class);
+        intent.putExtra("ID", customerId);
         intent.putExtra(RENTALDATA, rental);
         startActivity(intent);
     }

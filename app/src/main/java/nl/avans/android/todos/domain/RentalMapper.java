@@ -34,6 +34,7 @@ public class   RentalMapper {
                 String customerLastName = jsonProduct.getString("last_name");
                 int customerId = jsonProduct.getInt("customer_id");
                 int filmId = jsonProduct.getInt("film_id");
+                int inventoryid = jsonProduct.getInt("inventory_id");
 
                 //DateTime todoDateTime = ISODateTimeFormat.dateTimeParser().parseDateTime(timestamp);
 
@@ -47,6 +48,7 @@ public class   RentalMapper {
                 rental.setCustomerFirstName(customerFirstName);
                 rental.setCustomerLastName(customerLastName);
                 rental.setCustomerId(customerId);
+                rental.setInventoryId(inventoryid);
                 result.add(rental);
             }
         } catch( JSONException ex) {
