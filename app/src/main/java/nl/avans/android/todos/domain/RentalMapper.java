@@ -31,7 +31,6 @@ public class   RentalMapper {
                 int length = jsonProduct.getInt("length");
                 String rating = jsonProduct.getString("rating");
                 String customerFirstName = jsonProduct.getString("first_name");
-                String customerLastName = jsonProduct.getString("last_name");
                 int customerId = jsonProduct.getInt("customer_id");
                 int filmId = jsonProduct.getInt("film_id");
                 int inventoryid = jsonProduct.getInt("inventory_id");
@@ -46,7 +45,6 @@ public class   RentalMapper {
                 rental.setFilmRating(rating);
                 rental.setFilmLength(length);
                 rental.setCustomerFirstName(customerFirstName);
-                rental.setCustomerLastName(customerLastName);
                 rental.setCustomerId(customerId);
                 rental.setInventoryId(inventoryid);
                 result.add(rental);
