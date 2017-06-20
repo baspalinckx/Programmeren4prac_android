@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToDos</string>
+    <string name="app_name">FilmProject</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -15,6 +15,7 @@
 
     <string name="preference_file_key">nl.avans.android.todos.SHARED_PREFS_FILE</string>
     <string name="saved_token">saved_token</string>
+    <string name="saved_customerid">saved_customerid</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -85,4 +86,6 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="title_activity_register_activity">Register_activity</string>
+    <string name="title_activity_film_detail">FilmDetail</string>
 </resources>

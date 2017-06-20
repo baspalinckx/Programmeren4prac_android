@@ -20,130 +20,77 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+
 import nl.avans.android.todos.R;
-import nl.avans.android.todos.domain.ToDo;
-import nl.avans.android.todos.domain.ToDoAdapter;
-import nl.avans.android.todos.service.ToDoRequest;
+import nl.avans.android.todos.domain.Customer;
+import nl.avans.android.todos.domain.Film;
+import nl.avans.android.todos.domain.Rental;
+import nl.avans.android.todos.domain.RentalAdapter;
+import nl.avans.android.todos.service.FilmRequest;
+import nl.avans.android.todos.service.RentalRequest;
+
+import static nl.avans.android.todos.presentation.FilmListActivity.FILMDATA;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        AdapterView.OnItemClickListener,
-        ToDoRequest.ToDoListener {
+        AdapterView.OnItemClickListener, RentalRequest.RentalListener {
 
     // Logging tag
     public final String TAG = this.getClass().getSimpleName();
-
-    // The name for communicating Intents extras
-    public final static String TODO_DATA = "TODOS";
+    public final static String RENTALDATA = "RENTALS";
 
     // A request code for returning data from Intent - is supposed to be unique.
-    public static final int MY_REQUEST_CODE = 1234;
+    //public static final int MY_REQUEST_CODE = 1234;
 
     // UI Elements
-    private ListView listViewToDos;
-    private BaseAdapter todoAdapter;
-    private ArrayList<ToDo> toDos = new ArrayList<>();
+    private ListView listViewRentals;
+    private RentalAdapter rentalAdapter;
+    private ArrayList<Rental> rentals = new ArrayList<>();
+    Intent intent;
+    int customerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        intent = getIntent();
+        customerId = (Integer) intent.getSerializableExtra("ID");
 
-        // We kijken hier eerst of de gebruiker nog een geldig token heeft.
-        // Het token is opgeslagen in SharedPreferences.
-        // Mocht er geen token zijn, of het token is expired, dan moeten we
-        // eerst opnieuw inloggen.
-        if(tokenAvailable()){
-            setContentView(R.layout.activity_main);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent newToDo = new Intent(getApplicationContext(), ToDoEditActivity.class);
-                    // We receive a ToDo object to be stored via the API.
-                    startActivityForResult( newToDo, MY_REQUEST_CODE );
-                }
-            });
-
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
-
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-
-            listViewToDos = (ListView) findViewById(R.id.listViewToDos);
-            listViewToDos.setOnItemClickListener(this);
-            todoAdapter = new ToDoAdapter(this, getLayoutInflater(), toDos);
-            listViewToDos.setAdapter(todoAdapter);
-            //
-            // We hebben een token. Je zou eerst nog kunnen valideren dat het token nog
-            // geldig is; dat doen we nu niet.
-            // Vul de lijst met ToDos
-            //
-            Log.d(TAG, "Token gevonden - ToDos ophalen!");
-            getToDos();
-        } else {
-            //
-            // Blijkbaar was er geen token - eerst inloggen dus
-            //
-            Log.d(TAG, "Geen token gevonden - inloggen dus");
-            Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(login);
-            // Sluit de huidige activity. Dat voorkomt dat de gebuiker via de
-            // back-button zonder inloggen terugkeert naar het homescreen.
-            finish();
-        }
-    }
-
-    /**
-     * Aangeroepen door terugkerende Intents. Maakt het mogelijk om data
-     * terug te ontvangen van een Intent.
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param pData
-     */
-    protected void onActivityResult(int requestCode, int resultCode, Intent pData)
-    {
-        if ( requestCode == MY_REQUEST_CODE )
-        {
-            Log.v( TAG, "onActivityResult OK" );
-            if (resultCode == Activity.RESULT_OK )
-            {
-                final ToDo newToDo = (ToDo) pData.getSerializableExtra(TODO_DATA);
-                Log.v( TAG, "Retrieved Value newToDo is " + newToDo);
-
-                // We need to save our new ToDo
-                postTodo(newToDo);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newFilm = new Intent(getApplicationContext(), FilmListActivity.class);
+                newFilm.putExtra("ID", customerId);
+                startActivity(newFilm);
             }
-        }
+        });
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        listViewRentals = (ListView) findViewById(R.id.listViewRentals);
+        listViewRentals.setOnItemClickListener(this);
+        rentalAdapter = new RentalAdapter(this, rentals);
+        listViewRentals.setAdapter(rentalAdapter);
+
+        Log.d(TAG, "Token gevonden - Rentals ophalen!");
+
+        getRentals();
 
     }
 
-    /**
-     * Check of een token in localstorage is opgeslagen. We checken niet de geldigheid -
-     * alleen of het token bestaat.
-     *
-     * @return
-     */
-    private boolean tokenAvailable() {
-        boolean result = false;
-
-        Context context = getApplicationContext();
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String token = sharedPref.getString(getString(R.string.saved_token), "dummy default token");
-        if (token != null && !token.equals("dummy default token")) {
-            result = true;
-        }
-        return result;
-    }
 
     @Override
     public void onBackPressed() {
@@ -174,7 +121,7 @@ public class MainActivity extends AppCompatActivity
             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(settings);
             return true;
-        } else if(id == R.id.action_logout){
+        } else if (id == R.id.action_logout) {
             // Logout - remove token from local settings and navigate to login screen.
             SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
                     getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -183,8 +130,8 @@ public class MainActivity extends AppCompatActivity
             editor.commit();
 
             // Empty the homescreen
-            toDos.clear();
-            todoAdapter.notifyDataSetChanged();
+            rentals.clear();
+            rentalAdapter.notifyDataSetChanged();
 
             // Navigate to login screen
             Intent login = new Intent(getApplicationContext(), LoginActivity.class);
@@ -223,65 +170,36 @@ public class MainActivity extends AppCompatActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.i(TAG, "Position " + position + " is geselecteerd");
 
-        ToDo toDo = toDos.get(position);
-        Intent intent = new Intent(getApplicationContext(), ToDoDetailActivity.class);
-        intent.putExtra(TODO_DATA, toDo);
+        Rental rental = rentals.get(position);
+        Intent intent = new Intent(getApplicationContext(), RentalDetailActivity.class);
+        intent.putExtra("ID", customerId);
+        intent.putExtra(RENTALDATA, rental);
         startActivity(intent);
     }
 
-    /**
-     * Callback function - handle an ArrayList of ToDos
-     *
-     * @param toDoArrayList
-     */
     @Override
-    public void onToDosAvailable(ArrayList<ToDo> toDoArrayList) {
-
-        Log.i(TAG, "We hebben " + toDoArrayList.size() + " items in de lijst");
-
-        toDos.clear();
-        for(int i = 0; i < toDoArrayList.size(); i++) {
-            toDos.add(toDoArrayList.get(i));
+    public void onRentalsAvailable(ArrayList<Rental> rentalArrayList) {
+        rentals.clear();
+        for (int i = 0; i < rentalArrayList.size(); i++) {
+            rentals.add(rentalArrayList.get(i));
         }
-        todoAdapter.notifyDataSetChanged();
+        rentalAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Callback function - handle a single ToDo
-     *
-     * @param todo
-     */
     @Override
-    public void onToDoAvailable(ToDo todo) {
-        toDos.add(todo);
-        todoAdapter.notifyDataSetChanged();
+    public void onRentalAvailable(Rental rental) {
+        rentals.add(rental);
+        rentalAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * Callback function
-     *
-     * @param message
-     */
     @Override
-    public void onToDosError(String message) {
-        Log.e(TAG, message);
+    public void onRentalsError(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * Start the activity to GET all ToDos from the server.
-     */
-    private void getToDos(){
-        ToDoRequest request = new ToDoRequest(getApplicationContext(), this);
-        request.handleGetAllToDos();
-    }
+    public void getRentals() {
 
-    /**
-     * Start the activity to POST a new ToDo to the server.
-     */
-    private void postTodo(ToDo todo){
-        ToDoRequest request = new ToDoRequest(getApplicationContext(), this);
-        request.handlePostToDo(todo);
+        RentalRequest request = new RentalRequest(getApplicationContext(), this);
+        request.handleGetAllRentals(customerId);
     }
-
 }
